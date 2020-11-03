@@ -59,3 +59,11 @@ Vector.prototype.times = function(factor) {
     return new Vector(this.x * factor, this.y * factor);
 }
 
+var actorChars = {
+    "@": Player,
+    "o": Coin,
+    "=": Lava,
+    "|": Lava,
+    "v": Lava
+}
+
