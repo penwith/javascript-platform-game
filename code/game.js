@@ -47,17 +47,17 @@ function Level(plan) {
 }
 Level.prototype.isFinished = function() {
     return this.status != null && this.finishDelay < 0;
-}
+};
 
 function Vector(x, y) {
     this.x = x; this.y = y;
 }
 Vector.prototype.plus = function(other) {
     return new Vector(this.x + other.x, this.y + other.y);
-}
+};
 Vector.prototype.times = function(factor) {
     return new Vector(this.x * factor, this.y * factor);
-}
+};
 
 var actorChars = {
     "@": Player,
@@ -65,7 +65,7 @@ var actorChars = {
     "=": Lava,
     "|": Lava,
     "v": Lava
-}
+};
 
 function Player(pos, ch) {
     this.pos = pos.plus(new Vector(0, -0.5));
@@ -131,7 +131,7 @@ DOMDisplay.prototype.drawBackground = function() {
     });
 
     return table;
-}
+};
 
 DOMDisplay.prototype.drawActors = function() {
 
@@ -148,7 +148,7 @@ DOMDisplay.prototype.drawActors = function() {
     });
 
     return wrap;
-}
+};
 
 DOMDisplay.prototype.drawFrame = function() {
 
@@ -158,5 +158,28 @@ DOMDisplay.prototype.drawFrame = function() {
     this.actorLayer = this.wrap.appendChild(this.drawActors());
     this.wrap.className = "game " + (this.level.status || "");
     this.scrollPlayerIntoView();
-}
+};
 
+DOMDisplay.prototype.scrollPlayerIntoView = function() {
+
+    var width = this.wrap.clientWidth;
+    var height = this.wrap.clientHeight;
+    var margin =  width / 3;
+
+    // The viewport
+    var left = this.wrap.scrollLeft, right = left + width;
+    var top = this.wrap.scrollTop, bottom = top + height;
+
+    var player = this.level.player;
+    var center = player.pos.plus(player.size.times(0.5)).times(scale);
+
+    if (center.x < left + margin)
+        this.wrap.scrollLeft = center.x - margin;
+    else if (center.x > right - margin)
+        this.wrap.scrollLeft = center.x + margin - width;
+    
+    if (center.y < top + margin)
+        this.wrap.scrollTop = center.y - margin;
+    else if (center.y > bottom - margin)
+        this.wrap.scrollTop = center.y + margin - height;
+};
