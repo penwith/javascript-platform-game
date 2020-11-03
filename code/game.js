@@ -45,3 +45,8 @@ function Level(plan) {
 
     this.status = this.finishDelay = null;
 }
+
+Level.prototype.isFinished = function() {
+    return this.status != null && this.finishDelay < 0;
+}
+
