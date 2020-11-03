@@ -108,7 +108,7 @@ function elt(name, className) {
 function DOMDisplay(parent, level) {
     this.wrap = parent.appendChild(elt("div", "game"));
     this.level = level;
-    this.wrap.appendChld(this.drawBackground());
+    this.wrap.appendChild(this.drawBackground());
     this.actorLayer = null;
     this.drawFrame();
 }
@@ -183,3 +183,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     else if (center.y > bottom - margin)
         this.wrap.scrollTop = center.y + margin - height;
 };
+
+DOMDisplay.prototype.clear = function() {
+    this.wrap.parentNode.removeChild(this.wrap);
+}
