@@ -27,7 +27,7 @@ function Level(plan) {
             var Actor = actorChars[ch];
 
             if (Actor)
-                this.actors.push(new Actor(new Vector(x, y), ch));
+                this.actors.push(new Actor(new Vector(x, y), ch));                
             else if (ch == "x")
                 fieldType = "wall";
             else if (ch == "!")
@@ -62,12 +62,12 @@ Vector.prototype.times = function(factor) {
 var actorChars = {
     "@": Player,
     "o": Coin,
-    "=": Lava,
-    "|": Lava,
+    "=": Lava, 
+    "|": Lava, 
     "v": Lava
 };
 
-function Player(pos, ch) {
+function Player(pos) {
     this.pos = pos.plus(new Vector(0, -0.5));
     this.size = new Vector(0.8, 1.5);
     this.speed = new Vector(0, 0);
@@ -90,7 +90,7 @@ function Lava(pos, ch) {
         this.repeatPos = pos;
     }
 }
-Player.prototype.type = "lava";
+Lava.prototype.type = "lava";
 
 function Coin(pos) {
     this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
@@ -220,7 +220,7 @@ Level.prototype.actorAt = function(actor) {
 
         if (other != actor &&
             actor.pos.x + actor.size.x > other.pos.x &&
-            actor.pos.x < other.pos.x + other.siz.x &&
+            actor.pos.x < other.pos.x + other.size.x &&
             actor.pos.y + actor.size.y > other.pos.y &&
             actor.pos.y < other.pos.y + other.size.y)
             return other;            
@@ -377,7 +377,7 @@ function runAnimation(frameFunc) {
         }
 
         lastTime = time;
-        if (!stop)  (frame);
+        if (!stop)  requestAnimationFrame(frame);
     }
 
     requestAnimationFrame(frame);
@@ -387,7 +387,7 @@ var arrows = trackKeys(arrowCodes);
 
 function runLevel(level, Display, andThen) {
 
-    var display = new Display(dovument.body, level);
+    var display = new Display(document.body, level);
 
     runAnimation(function(step) {
         level.animate(step, arrows);
@@ -418,5 +418,3 @@ function runGame(plans, Display) {
 
     startLevel(0);
 }
-
-
