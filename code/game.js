@@ -257,3 +257,11 @@ Lava.prototype.act = function(step, level) {
         this.speed = this.speed.times(-1);
 };
 
+var wobbleSpeed = 8, wobbleDist = 0.07;
+
+Coin.prototype.act = function(step) {
+    this.wobble += step * wobbleSpeed;
+    var wobblePos = Math.sin(this.wobble) * wobbleDist;
+    this.pos = this.basePos.plus(new Vector(0, wobblePos));
+};
+
