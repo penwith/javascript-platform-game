@@ -383,3 +383,22 @@ function runAnimation(frameFunc) {
     requestAnimationFrame(frame);
 }
 
+var arrows = trackKeys(arrowCodes);
+
+function runLevel(level, Display, andThen) {
+
+    var display = new Display(dovument.body, level);
+
+    runAnimation(function(step) {
+        level.animate(step, arrows);
+        display.drawFrame(step);
+        if (level.isFinished()) {
+            display.clear();
+            if (andThen)
+                andThen(level.status);
+            return false;
+        }
+    });
+}
+
+
