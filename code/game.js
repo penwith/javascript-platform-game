@@ -403,12 +403,18 @@ function runLevel(level, Display, andThen) {
 
 function runGame(plans, Display) {
 
+    var lives = 3;
+
     function startLevel(n) {
+
+        lives -= 1;
 
         runLevel(new Level(plans[n]), Display, function(status) {
 
-            if (status == "lost")
-                startLevel(n);
+            if (status == "lost") {
+                if (lives >= 0) startLevel(n);
+                else startLevel(0);
+            }
             else if (n < plans.length - 1)
                 startLevel(n + 1);
             else
