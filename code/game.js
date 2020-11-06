@@ -320,19 +320,24 @@ function runLevel(level, Display, andThen) {
     });
 }
 
+var startLives = 2;
+
 function runGame(plans, Display) {
 
-    var lives = 2;
+    var lives = startLives;
 
     function startLevel(n) {        
 
         runLevel(new Level(plans[n]), Display, function(status) {
+
+            console.log(status);
             
             if (status == "lost") {
                 if (lives > 0) {
                     lives -= 1;
                     startLevel(n);
                 } else {
+                    lives = startLives;
                     startLevel(0);
                 }
             }
